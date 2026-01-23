@@ -18,7 +18,7 @@ export const buffer = {};   // <--- THIS is what was missing
 
 export async function preloadSounds(soundFiles) {
   for (const sndName of soundFiles) {
-    const url = `snds/${sndName}.wav`;
+    const url = `../../stimuli/snds/${sndName}.wav`;
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     buffer[sndName] = await audioCtx.decodeAudioData(arrayBuffer);
