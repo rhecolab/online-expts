@@ -51,7 +51,7 @@ const taskName = 'audBlink';
 //};
 
 
-export async function startTask(participantID) {
+async function startTask(participantID) {
 
     subjID = participantID;
 
@@ -75,6 +75,11 @@ export async function startTask(participantID) {
         runTrial(fullSeq[trialNum]);
     });
 }
+
+export default {
+    startTask
+};
+
 
 // Run single trial
 function runTrial(trialInfo) {

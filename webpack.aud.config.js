@@ -13,6 +13,7 @@ module.exports = {
     library: {
         name: 'ablink',
         type: 'window',
+        export: 'default',
     },
   },
 
