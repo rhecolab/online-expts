@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { saveData } from '../../funcs/saveData.js';
+import { saveData } from '../../funcs/saveDataQ.js';
 
 // Parameters
 const stimON = 131;

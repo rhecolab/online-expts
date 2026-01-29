@@ -10,7 +10,10 @@ module.exports = {
   output: {
     filename: 'audBlink_bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'audBlinkTask',   // exposes functions globally (optional but good)
+    library: {
+        name: 'ablink',
+        type: 'window',
+    },
   },
 
   // Allows importing HTML files into JS
