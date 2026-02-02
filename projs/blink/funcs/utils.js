@@ -5,12 +5,10 @@ const githubPath = "https://rhecolab.github.io/online/";
 
 function getBasePath() {
   if (window.location.hostname.includes("qualtrics")) {
-    return GITHUB_BASE;
+    return githubPath;
   }
   return "../../"; // local fallback
 }
-
-
 
 // General shuffle
 export function shuffle(array) {
