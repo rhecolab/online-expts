@@ -1,7 +1,18 @@
 // Can load in specific functions depending on what that experiment needs 
-// Advantage is that if two experiments use the same func it'll be the same bc it's all in here instead of c&p
 
-// General shuffle 
+// Qualtrics can only access direct links, not relative links for stimuli 
+const githubPath = "https://rhecolab.github.io/online/";
+
+function getBasePath() {
+  if (window.location.hostname.includes("qualtrics")) {
+    return GITHUB_BASE;
+  }
+  return "../../"; // local fallback
+}
+
+
+
+// General shuffle
 export function shuffle(array) {
   let arr = array.slice();
   for (let i = arr.length - 1; i > 0; i--) {
@@ -13,12 +24,15 @@ export function shuffle(array) {
 
 // If sounds are necessary 
 export const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-export const buffer = {};   // <--- THIS is what was missing
+export const buffer = {};  
 
 
 export async function preloadSounds(soundFiles) {
+
+  const base = getBasePath();
+
   for (const sndName of soundFiles) {
-    const url = `../../stimuli/snds/${sndName}.wav`;
+    const url = `${base}stimuli/snds/${sndName}.wav`;
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     buffer[sndName] = await audioCtx.decodeAudioData(arrayBuffer);
