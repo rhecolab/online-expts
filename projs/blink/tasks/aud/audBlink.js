@@ -1,6 +1,9 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
 import { saveData } from '../../funcs/saveData.js';
 import { preloadSounds, playSound, buffer, audioCtx } from '../../funcs/utils.js';
+import html from "./audBlink.html";
+import "../../funcs/blink.css";
+
 
 window.playSound = playSound;
 window.preloadSounds = preloadSounds;
@@ -54,6 +57,10 @@ const taskName = 'audBlink';
 async function startTask(participantID) {
 
     subjID = participantID;
+
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    document.querySelector("#Questions").appendChild(container);
 
     const t1opts = ['glide_up', 'glide_down'];
     const t2opts = ['a1_sh', 'a2_sh', 'a8_sh', 'a9_sh'];

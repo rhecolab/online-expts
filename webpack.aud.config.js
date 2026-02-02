@@ -17,13 +17,17 @@ module.exports = {
     },
   },
 
-  // Allows importing HTML files into JS
-  module: {
+  // Import HTML & CSS 
+    module: {
     rules: [
       {
         test: /\.html$/i,
-        use: 'raw-loader',
+        use: "html-loader",
       },
-    ],
-  },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      }
+    ]
+  }
 };
