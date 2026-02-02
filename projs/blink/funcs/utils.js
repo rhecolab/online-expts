@@ -1,7 +1,7 @@
 // Can load in specific functions depending on what that experiment needs 
 
 // Qualtrics can only access direct links, not relative links for stimuli 
-const githubPath = "https://rhecolab.github.io/online/";
+const githubPath = "https://rhecolab.github.io/online/projs/blink/";
 
 function getBasePath() {
   if (window.location.hostname.includes("qualtrics")) {
