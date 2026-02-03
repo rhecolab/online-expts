@@ -58,9 +58,13 @@ async function startTask(participantID) {
 
     subjID = participantID;
 
-    const container = document.createElement("div");
-    container.innerHTML = html;
-    document.querySelector("#Questions").appendChild(container);
+    // Create experiment container
+    const root = document.createElement("div");
+    root.id = "expRoot";
+    document.querySelector(".SkinInner").appendChild(root);
+
+    // Inject HTML
+    root.innerHTML = html;
 
     const t1opts = ['glide_up', 'glide_down'];
     const t2opts = ['a1_sh', 'a2_sh', 'a8_sh', 'a9_sh'];
@@ -73,8 +77,13 @@ async function startTask(participantID) {
     window.trials = trialRnd;
     trialTotal = window.trials.length;
 
-    const soundFiles = ['glide_up', 'glide_down', 'a1_sh', 'a2_sh', 'a8_sh', 'a9_sh', 'h1_sh','h2_sh','h3_sh','h4_sh','h5_sh','h6_sh','h7_sh','h8_sh','h9_sh','h10_sh','i1_sh','i2_sh','i3_sh','i4_sh','i5_sh','i6_sh','i7_sh','i8_sh','i9_sh','i10_sh']
-    sounds = await preloadSounds(soundFiles)
+    const soundFiles = [
+      'glide_up','glide_down','a1_sh','a2_sh','a8_sh','a9_sh',
+      'h1_sh','h2_sh','h3_sh','h4_sh','h5_sh','h6_sh','h7_sh','h8_sh','h9_sh','h10_sh',
+      'i1_sh','i2_sh','i3_sh','i4_sh','i5_sh','i6_sh','i7_sh','i8_sh','i9_sh','i10_sh'
+    ];
+
+    await preloadSounds(soundFiles);
 
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
@@ -83,9 +92,7 @@ async function startTask(participantID) {
     });
 }
 
-export default {
-    startTask
-};
+export default { startTask };
 
 
 // Run single trial
