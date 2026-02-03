@@ -102,7 +102,6 @@ function runTrial(trialInfo) {
 
     const stimuli = trialInfo.stimOrder;
     let t = audioCtx.currentTime;
-    //trialStartTime = performance.now()
 
     for (let i = 0; i < stimuli.length; i++) {
         const stim = stimuli[i];
