@@ -219,7 +219,7 @@ function endTask() {
   const jsonData = JSON.stringify(data);
 
   // Save entire dataset into one embedded field
-  Qualtrics.SurveyEngine.setEmbeddedData("audBlinkData", jsonData);
+  Qualtrics.SurveyEngine.setEmbeddedData("blinkData", jsonData);
 
   // Advance survey so data is actually submitted
   document.querySelector("#NextButton").click();
