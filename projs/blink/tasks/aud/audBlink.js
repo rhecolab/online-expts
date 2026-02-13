@@ -1,5 +1,4 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { saveData } from '../../funcs/saveData.js';
 import { preloadSounds, playSound, buffer, audioCtx } from '../../funcs/utils.js';
 import html from "./audBlink.html";
 import "../../funcs/blink.css";
@@ -17,42 +16,9 @@ let currentTrial = null;
 let currentTrialRow = 0;
 let trialTotal = 0;
 let fullSeq = []
-let sounds = {}
 
 let subjID = "";
 const taskName = 'audBlink';
-
-// Preload & setup
-//window.onload = async () => {
-
-//  subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
-
-    // Generate trials
-//    const t1opts = ['glide_up', 'glide_down'];
-//    const t2opts = ['a1_sh', 'a2_sh', 'a8_sh', 'a9_sh'];
-//    const lags = [0,3,9];
-//    const reps = 2;
-
- //   const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
- //   fullSeq = makeSeq(trialRnd, 'aud');
-
-  //  window.trials = trialRnd
-  //  trialTotal = window.trials.length;
-  //  console.log(trialTotal)
-
-    //
-  //  const soundFiles = ['glide_up', 'glide_down', 'a1_sh', 'a2_sh', 'a8_sh', 'a9_sh', 'h1_sh','h2_sh','h3_sh','h4_sh','h5_sh','h6_sh','h7_sh','h8_sh','h9_sh','h10_sh','i1_sh','i2_sh','i3_sh','i4_sh','i5_sh','i6_sh','i7_sh','i8_sh','i9_sh','i10_sh']
-  //  sounds = await preloadSounds(soundFiles)
-
-    // Start button listener
-  //  document.getElementById("startButton").addEventListener("click", () => {
-  //      document.getElementById("instrBox").style.display = "none";
-  //      document.getElementById("startButton").style.display = "none";
-  //      runTrial(fullSeq[trialNum]);
-
-//    });
-//};
-
 
 async function startTask(participantID) {
 
@@ -155,26 +121,25 @@ window.collectResp = function(question, response = null) {
             lag: cTrial.lag,
             resp1: "",
             resp2: "",
-            //t1_pos: "",
-            //t2_pos: "",
-            //rt1: "",
-            //rt2: "",
-            //time: now.toISOString().split("T")[0] + " " + now.toTimeString().split(" ")[0],
-            //seqLen: stimuli.length,                         // length of the trial sequence
-            //seqOrder: stimuli.map(s => s.stim).join(","),    // all stimuli in order, separated by semicolon
-
+            t1_pos: "",
+            t2_pos: "",
+            rt1: "",
+            rt2: "",
+            time: now.toISOString().split("T")[0] + " " + now.toTimeString().split(" ")[0],
+            seqLen: stimuli.length,                        
+            seqOrder: stimuli.map(s => s.stim).join(","),    
         };
     }
 
     if (question === 2 && response !== null) {
         currentTrialRow.resp1 = response;
-        //currentTrialRow.rt1 = performance.now() - trialStartTime; 
+        currentTrialRow.rt1 = performance.now() - trialStartTime; 
 
     }
 
     if (question === 3 && response !== null) {
         currentTrialRow.resp2 = response;
-        //currentTrialRow.rt2 = performance.now() - trialStartTime; 
+        currentTrialRow.rt2 = performance.now() - trialStartTime; 
     }
 
     if (question === 1) {
@@ -204,23 +169,12 @@ window.collectResp = function(question, response = null) {
     }
 }
 
-// End experiment
-//function endTask(subjID, taskName) {
-//    document.getElementById("exptBox").innerText = "Task complete!";
-//    console.log("Subject ID:", subjID);
-//    console.log("Data:", data);
-//    saveData(subjID, taskName, data);
-//}
-
 function endTask() {
   console.log("Task complete.");
   console.log("Data:", data);
 
   const jsonData = JSON.stringify(data);
 
-  // Save entire dataset into one embedded field
   Qualtrics.SurveyEngine.setEmbeddedData("blinkData", jsonData);
-
-  // Advance survey so data is actually submitted
   document.querySelector("#NextButton").click();
 }
