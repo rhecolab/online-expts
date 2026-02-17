@@ -1,6 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { saveData } from '../../funcs/saveData.js';
-import { drawShape, drawCircle, drawTriangle, drawSquare, drawSemicircle, drawPolygon} from '../../funcs/utils.js';
+import { drawShape} from '../../funcs/utils.js';
 import html from "./shapeBlink.html";
 import "../../funcs/blink.css";
 
@@ -44,10 +43,8 @@ async function startTask(participantID) {
     window.trials = trialRnd;
     trialTotal = window.trials.length;
 
-    setTimeout(() => {
-        const canvas = document.getElementById("shapes");
-        ctx = canvas.getContext("2d");
-    }, 0);
+    canvas = document.getElementById("shapes");
+    ctx = canvas.getContext("2d");
 
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
