@@ -14,10 +14,11 @@ let currentTrialRow = 0;
 let trialTotal = 0;
 let fullSeq = []
 let trialStartTime;
+let ctx;
+let canvas;
 
 let subjID = "";
 const taskName = 'shapeBlink';
-
 
 async function startTask(participantID) {
 
@@ -43,8 +44,10 @@ async function startTask(participantID) {
     window.trials = trialRnd;
     trialTotal = window.trials.length;
 
-    const canvas = document.getElementById("shapes");
-    const ctx = canvas.getContext("2d");
+    setTimeout(() => {
+        const canvas = document.getElementById("shapes");
+        ctx = canvas.getContext("2d");
+    }, 0);
 
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
