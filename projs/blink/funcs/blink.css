@@ -109,11 +109,11 @@ button {
 }
 
 .btn2 {
-    width: 140px;
-    height: 140px;
+    width: 80px;
+    height: 80px;
     font-size: 15px;
-    padding: 8px;
-    margin: 6px;
+    padding: 5px;
+    margin: 5px;
     border-radius: 0;
     color: white;
     background-color: #437db0;
@@ -128,9 +128,9 @@ button {
   }
 
 .choice-btn {
-    width: 100px;
-    height: 100px;
-    padding: 10px;
+    width: 80px;
+    height: 80px;
+    padding: 5px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -139,7 +139,7 @@ button {
 }
 
 .choice-img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
 }
