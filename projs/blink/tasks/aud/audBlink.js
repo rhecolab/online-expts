@@ -33,6 +33,7 @@ async function startTask(participantID) {
     // Inject HTML
     root.innerHTML = html;
 
+    // Define trials
     const t1opts = ['glide_up', 'glide_down'];
     const t2opts = ['a1_sh', 'a2_sh', 'a8_sh', 'a9_sh'];
     const lags = [0,3,9];

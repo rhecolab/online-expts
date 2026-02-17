@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',   // use 'development' while debugging if you want
+  mode: 'production',  
 
   // Entry file for this task
   entry: './projs/blink/tasks/vis/visBlink.js',
@@ -13,16 +13,21 @@ module.exports = {
     library: {
         name: 'vblink',
         type: 'window',
+        export: 'default',
     },
   },
 
-  // Allows importing HTML files into JS
-  module: {
+  // Import HTML & CSS 
+    module: {
     rules: [
       {
         test: /\.html$/i,
-        use: 'raw-loader',
+        use: "html-loader",
       },
-    ],
-  },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      }
+    ]
+  }
 };

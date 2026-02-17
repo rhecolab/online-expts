@@ -1,5 +1,6 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { saveData } from '../../funcs/saveDataQ.js';
+import html from "./visBlink.html";
+import "../../funcs/blink.css";
 
 // Parameters
 const stimON = 131;
@@ -10,42 +11,25 @@ let currentTrial = null;
 let currentTrialRow = 0;
 let trialTotal = 0;
 let fullSeq = []
+let trialStartTime;
 
 let subjID = "";
 let ctx;
 const taskName = 'visBlink';
 
-// Preload & setup
-//window.onload = () => {
-
-//    subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
-
-    // Generate trials
-//    const t1opts = ['1', '2', '3', '4'];
-//    const t2opts = ['5', '6', '7', '8'];
-//    const lags = [0,3,9];
- //   const reps = 2;
-
- //   const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
-  //  fullSeq = makeSeq(trialRnd, 'vis');
-
-  //  window.trials = trialRnd
-  //  trialTotal = window.trials.length;
-  //  console.log(trialTotal)
-
-    // Start button listener
-   // document.getElementById("startButton").addEventListener("click", () => {
-    //    document.getElementById("instrBox").style.display = "none";
-    //    document.getElementById("startButton").style.display = "none";
-    //    runTrial(fullSeq[trialNum]);
-
-  //  });
-//};
-
-export function startTask(participantID) {
+async function startTask(participantID) {
 
     subjID = participantID;
 
+    // Create experiment container
+    const root = document.createElement("div");
+    root.id = "expRoot";
+    document.querySelector(".SkinInner").appendChild(root);
+    
+    // Inject HTML
+    root.innerHTML = html;
+
+    // Define trials
     const t1opts = ['1', '2', '3', '4'];
     const t2opts = ['5', '6', '7', '8'];
     const lags = [0,3,9];
@@ -64,10 +48,17 @@ export function startTask(participantID) {
     });
 }
 
+export default { startTask };
+
+
 // Run single trial
 function runTrial(trialInfo) {
 
     currentTrial = trialInfo; 
+    currentTrialRow = NaN;
+    currentTrial.stimuli = trialInfo.stimOrder;
+
+    trialStartTime = performance.now();
 
     let i = 0;
     currentTrialRow = NaN;
@@ -81,7 +72,7 @@ function runTrial(trialInfo) {
             i++;
             setTimeout(showISI, stimON);
         } else {
-            collectResp(1,trialInfo); // Move to response collection
+            collectResp(1,trialInfo); 
         }
     }
 
@@ -106,58 +97,6 @@ function changeStim(stim) {
   alphanum.style.color = color;
 }
 
-// Response collection
-//window.collectResp = function(question, response = null) {
-
- //   const cTrial = trials[trialNum];
- //   console.log('t1', cTrial.t1);
- //   console.log('t2', cTrial.t2);
- //   console.log('lag', cTrial.lag);
-
-    // Always initialize when question 1 is shown
- //   if (question === 1) {
- //        $("#q1").show();
-//
- //        currentTrialRow = {
- //           t1_item: cTrial.t1,
- //           t2_item: cTrial.t2,
- //           lag: cTrial.lag,
- //           resp1: "",
- //           resp2: ""
- //       };
- //   }
-
-//    if (question === 2) {
-//        const r1 = document.getElementById("q1input").value.trim();
-//        currentTrialRow.resp1 = r1;
-
- //       $("#q1").hide();
- //       $("#q2").show();
- //       return;
- //   }
-
-//       if (question === 3) {
-//        const r2 = document.getElementById("q2input").value.trim();
-//        currentTrialRow.resp2 = r2;
-
-//        data.push(currentTrialRow);
-//        currentTrialRow = null;
-
- //       $("#q2").hide();
- //       trialNum++;
-
- //       if (trialNum < trialTotal) {
- //           document.getElementById("q1input").value = "";
- //           document.getElementById("q2input").value = "";
- //           runTrial(fullSeq[trialNum]);
- //       } else {
- //           endTask(subjID, taskName);
- //       }
- //   }
-
- //   }
-
-// Response collection
 window.collectResp = function(question, response = null) {
 
     const cTrial = trials[trialNum];
@@ -172,33 +111,43 @@ window.collectResp = function(question, response = null) {
             t2_item: cTrial.t2,
             lag: cTrial.lag,
             resp1: "",
-            resp2: ""
+            resp2: "",
+            t1_pos: "",
+            t2_pos: "",
+            rt1: "",
+            rt2: "",
+            time: now.toISOString().split("T")[0] + " " + now.toTimeString().split(" ")[0],
+            seqLen: currentTrial.stimuli.length,
+            seqOrder: currentTrial.stimuli.map(s => s.stim).join(","),
         };
     }
 
     if (question === 2 && response !== null) {
         currentTrialRow.resp1 = response;
+        currentTrialRow.rt1 = performance.now() - trialStartTime;
     }
 
     if (question === 3 && response !== null) {
         currentTrialRow.resp2 = response;
+        currentTrialRow.rt2 = performance.now() - trialStartTime;
     }
 
     if (question === 1) {
-        $("#q1").show();
-        $("#q2").hide();
+        if (q1) q1.style.display = "block";
+        if (q2) q2.style.display = "none";
     }
 
     if (question === 2) {
-        $("#q1").hide();
-        $("#q2").show();
+        if (q1) q1.style.display = "none";
+        if (q2) q2.style.display = "block";
     }
 
     if (question === 3) {
         data.push(currentTrialRow);
         currentTrialRow = null;
 
-        $("#q1, #q2").hide();
+        if (q1) q1.style.display = "none";
+        if (q2) q2.style.display = "none";
         trialNum++;
 
         if (trialNum < trialTotal) {
@@ -209,46 +158,15 @@ window.collectResp = function(question, response = null) {
     }
 }
 
-// End experiment
-//function endTask(subjID, taskName) {
- //   document.getElementById("exptBox").innerText = "Task complete!";
-  //  console.log("Subject ID:", subjID);
-  //  console.log("Data:", data);
-   // saveData(subjID, taskName, data);
-//}
+function endTask() {
+  console.log("Task complete.");
+  console.log("Data:", data);
 
-function endTask(subjID, taskName) {
+  const jsonData = JSON.stringify(data);
 
-    document.getElementById("exptBox").innerText = "Task complete!";
+  // Save entire dataset into one embedded field
+  Qualtrics.SurveyEngine.setEmbeddedData("blinkData", jsonData);
 
-    // Convert each column into semicolon strings
-    //const rt = [];
-    const t1_item = [];
-    const t2_item = [];
-    const lag = [];
-    const resp1 = [];
-    const resp2 = [];
-
-    data.forEach(trial => {
-        t1_item.push(trial.t1_item);
-        t2_item.push(trial.t2_item);
-        lag.push(trial.lag);
-        resp1.push(trial.resp1);
-        resp2.push(trial.resp2);
-    });
-
-    Qualtrics.SurveyEngine.setEmbeddedData("t1_item", t1_item.join(";"));
-    Qualtrics.SurveyEngine.setEmbeddedData("t2_item", t2_item.join(";"));
-    Qualtrics.SurveyEngine.setEmbeddedData("lag", lag.join(";"));
-    Qualtrics.SurveyEngine.setEmbeddedData("resp1", resp1.join(";"));
-    Qualtrics.SurveyEngine.setEmbeddedData("resp2", resp2.join(";"));
-
-    Qualtrics.SurveyEngine.setEmbeddedData("SubjectID", subjID);
-    Qualtrics.SurveyEngine.setEmbeddedData("taskName", taskName);
-    Qualtrics.SurveyEngine.setEmbeddedData("userAgent", navigator.userAgent);
-
-    // Move survey forward
-    setTimeout(() => {
-        document.querySelector("#NextButton").click();
-    }, 500);
+  // Advance survey so data is actually submitted
+  document.querySelector("#NextButton").click();
 }
