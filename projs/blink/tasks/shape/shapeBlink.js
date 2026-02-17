@@ -31,6 +31,14 @@ async function startTask(participantID) {
     // Inject HTML
     root.innerHTML = html;
 
+    // Set up canvas
+    canvas = document.getElementById("shapes");
+    if (!canvas) {
+        console.error("Canvas not found!");
+        return;
+    }
+    ctx = canvas.getContext("2d");
+
     // Define trials
     const t1opts = ['circle', 'square', 'triangle', 'pentagon'];
     const t2opts = ['semiup', 'semidown', 'semileft', 'semiright'];
@@ -42,9 +50,6 @@ async function startTask(participantID) {
 
     window.trials = trialRnd;
     trialTotal = window.trials.length;
-
-    canvas = document.getElementById("shapes");
-    ctx = canvas.getContext("2d");
 
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
