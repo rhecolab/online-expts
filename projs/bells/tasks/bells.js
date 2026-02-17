@@ -3,7 +3,13 @@
 //import "../../funcs/bells.css";
 
 import html from "https://rhecolab.github.io/online/projs/bells/tasks/bells";
-import "https://rhecolab.github.io/online/projs/bells/funcs/bells.css"
+//import "https://rhecolab.github.io/online/projs/bells/funcs/bells.css"
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = "https://rhecolab.github.io/online/projs/bells/funcs/bells.css";
+document.head.appendChild(link);
+
+
 
 // Parameters
 let data = [];
