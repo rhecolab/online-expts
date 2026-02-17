@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="module" src="audBlink.js" defer>  </script>
+
+    </head>
+
+    <body>        
+
+        <div id="exptBox" class="stimuli-grid"> 
+
+        <div id="instrBox">
+
+            Bells instructions here! 
+            <br>
+            <br> Press the START button when you're ready to start.
+            <br><br>
+            <button id="startButton" class="button" onlick="runTask()"> START </button>
+
+        </div>
+        
+        <div id="stim" style="display: none"> 
+            <img src="../../stimuli/bells.jpg">
+        </div>        
+
+        </div>
+        
+    </body>
+
+</html>
