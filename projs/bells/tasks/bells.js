@@ -24,6 +24,8 @@ async function startTask(participantID) {
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
+        document.getElementById("stim").style.display = "none";
+
     });
 
     runTrial();
