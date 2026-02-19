@@ -21,14 +21,16 @@ async function startTask(participantID) {
     // Inject HTML
     root.innerHTML = html;
 
+    // Hide bells image at first 
+    document.getElementById("stim").style.display = "none";
+
+    // Hide instructions & start button when start
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
-        document.getElementById("stim").style.display = "none";
-
+        runTrial();
     });
 
-    runTrial();
 }
 
 export default { startTask };
