@@ -59,7 +59,7 @@ function runTrial(){
                 rt: Math.round(performance.now() - startTime)
             };
 
-            trialData.push(trial);
+            data.push(trial);
             console.log("Trial saved:", trial);
         }
 
@@ -76,7 +76,6 @@ function runTrial(){
 
 function endTask() {
 
-data = trialData; 
   console.log("Task complete.");
   console.log("Data:", data);
 
