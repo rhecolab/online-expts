@@ -53,13 +53,13 @@ function runTrial(){
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
 
-        countdown.textContent =
+        countdownDiv.textContent =
             String(minutes).padStart(2, "0") + ":" +
             String(seconds).padStart(2, "0");
 
         // Turn red in last 30 seconds
         if (totalSeconds <= 30) {
-            countdown.style.color = "red";
+            countdownDiv.style.color = "red";
         }
 
         if (remaining > 0) {
